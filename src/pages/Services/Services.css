@@ -1,0 +1,258 @@
+.services-page {
+  padding-top: 80px;
+  background: var(--white);
+  min-height: 100vh;
+}
+
+/* Hero */
+.services-hero {
+  padding: 6rem 0 4rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  text-align: center;
+}
+
+.services-hero h1 {
+  font-size: clamp(3rem, 6vw, 5rem);
+  margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--text-dark);
+  margin-bottom: 3rem;
+  min-height: 60px;
+}
+
+.services-stats {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number-large {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 900;
+  color: var(--sky-blue-primary);
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.stat-text {
+  color: var(--text-gray);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+/* Service Tabs */
+.service-tabs-section {
+  padding: 3rem 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.service-tabs {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.service-tab {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  border: 2px solid;
+  background: var(--white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-display);
+}
+
+.tab-sky {
+  border-color: #bae6fd;
+  color: #0284c7;
+}
+
+.tab-sky.active {
+  background: linear-gradient(135deg, #38bdf8, #7dd3fc);
+  color: white;
+  border-color: #38bdf8;
+}
+
+.tab-pink {
+  border-color: #fce7f3;
+  color: #db2777;
+}
+
+.tab-pink.active {
+  background: linear-gradient(135deg, #ec4899, #f9a8d4);
+  color: white;
+  border-color: #ec4899;
+}
+
+.tab-yellow {
+  border-color: #fef9c3;
+  color: #d97706;
+}
+
+.tab-yellow.active {
+  background: linear-gradient(135deg, #fbbf24, #fde047);
+  color: white;
+  border-color: #fbbf24;
+}
+
+.tab-green {
+  border-color: #d1fae5;
+  color: #047857;
+}
+
+.tab-green.active {
+  background: linear-gradient(135deg, #10b981, #6ee7b7);
+  color: white;
+  border-color: #10b981;
+}
+
+.service-tab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Service Details */
+.service-details-section {
+  padding: 5rem 0;
+  background: #fafafa;
+}
+
+.service-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.service-header h2 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+
+.service-header p {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--text-gray);
+}
+
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.program-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: 25px;
+  border: 2px solid var(--border-light);
+  transition: all 0.3s ease;
+}
+
+.program-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  border-color: var(--sky-blue-primary);
+}
+
+.program-card h3 {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.program-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.program-duration,
+.program-students {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+}
+
+.program-card .btn {
+  width: 100%;
+}
+
+/* CTA */
+.services-cta {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #e0f2fe 0%, #fce7f3 50%, #fef9c3 100%);
+}
+
+.cta-box {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+}
+
+.cta-box h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  font-family: var(--font-display);
+}
+
+.cta-box p {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--text-gray);
+  margin-bottom: 2.5rem;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .services-stats {
+    gap: 2rem;
+  }
+
+  .service-tabs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .service-tab {
+    width: 100%;
+  }
+
+  .programs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+  }
+
+  .btn-large {
+    width: 100%;
+  }
+}
