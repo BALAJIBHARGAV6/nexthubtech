@@ -379,8 +379,16 @@ class App {
     this.onCheck();
   }
   onWheel(e) {
+    e.preventDefault();
     const delta = e.deltaY || e.wheelDelta || e.detail;
     this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+    this.onCheckDebounce();
+  }
+  
+  // Fallback scroll detection for hosting environments
+  onScroll(e) {
+    const delta = e.deltaY || e.wheelDelta || e.detail || 1;
+    this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.1;
     this.onCheckDebounce();
   }
   onCheck() {
@@ -420,30 +428,50 @@ class App {
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);
     this.boundOnWheel = this.onWheel.bind(this);
+    this.boundOnScroll = this.onScroll.bind(this);
     this.boundOnTouchDown = this.onTouchDown.bind(this);
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
+    
+    // Enhanced scroll detection for hosting compatibility
     window.addEventListener('resize', this.boundOnResize);
-    window.addEventListener('mousewheel', this.boundOnWheel);
-    window.addEventListener('wheel', this.boundOnWheel);
+    
+    // Multiple wheel event listeners for better compatibility
+    window.addEventListener('wheel', this.boundOnWheel, { passive: false });
+    window.addEventListener('mousewheel', this.boundOnWheel, { passive: false });
+    window.addEventListener('DOMMouseScroll', this.boundOnWheel, { passive: false });
+    
+    // Mouse events
     window.addEventListener('mousedown', this.boundOnTouchDown);
     window.addEventListener('mousemove', this.boundOnTouchMove);
     window.addEventListener('mouseup', this.boundOnTouchUp);
-    window.addEventListener('touchstart', this.boundOnTouchDown);
-    window.addEventListener('touchmove', this.boundOnTouchMove);
-    window.addEventListener('touchend', this.boundOnTouchUp);
+    
+    // Touch events for mobile
+    window.addEventListener('touchstart', this.boundOnTouchDown, { passive: false });
+    window.addEventListener('touchmove', this.boundOnTouchMove, { passive: false });
+    window.addEventListener('touchend', this.boundOnTouchUp, { passive: false });
+    
+    // Additional scroll detection for hosting environments
+    document.addEventListener('scroll', this.boundOnScroll, { passive: false });
+    window.addEventListener('scroll', this.boundOnScroll, { passive: false });
   }
   destroy() {
     window.cancelAnimationFrame(this.raf);
+    
+    // Clean up all event listeners
     window.removeEventListener('resize', this.boundOnResize);
-    window.removeEventListener('mousewheel', this.boundOnWheel);
     window.removeEventListener('wheel', this.boundOnWheel);
+    window.removeEventListener('mousewheel', this.boundOnWheel);
+    window.removeEventListener('DOMMouseScroll', this.boundOnWheel);
     window.removeEventListener('mousedown', this.boundOnTouchDown);
     window.removeEventListener('mousemove', this.boundOnTouchMove);
     window.removeEventListener('mouseup', this.boundOnTouchUp);
     window.removeEventListener('touchstart', this.boundOnTouchDown);
     window.removeEventListener('touchmove', this.boundOnTouchMove);
     window.removeEventListener('touchend', this.boundOnTouchUp);
+    document.removeEventListener('scroll', this.boundOnScroll);
+    window.removeEventListener('scroll', this.boundOnScroll);
+    
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
     }

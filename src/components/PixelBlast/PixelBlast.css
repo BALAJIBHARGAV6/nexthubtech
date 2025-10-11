@@ -4,3 +4,31 @@
   position: relative;
   overflow: hidden;
 }
+
+/* Enhanced mobile visibility */
+.pixel-blast-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.4)) saturate(1.5) brightness(1.1);
+  mix-blend-mode: normal;
+  image-rendering: crisp-edges;
+  background: #ffffff;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .pixel-blast-container canvas {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 40px rgba(56, 189, 248, 0.6)) saturate(1.8) brightness(1.2);
+  }
+}
+
+/* Ensure visibility on all devices */
+@media (max-width: 480px) {
+  .pixel-blast-container canvas {
+    opacity: 1;
+    filter: drop-shadow(0 0 50px rgba(56, 189, 248, 0.8)) saturate(2) brightness(1.3);
+  }
+}

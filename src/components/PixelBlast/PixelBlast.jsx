@@ -402,11 +402,21 @@ const PixelBlast = ({
       const setSize = () => {
         const w = container.clientWidth || 1;
         const h = container.clientHeight || 1;
+        
+        // Enhanced mobile detection and pixel ratio handling
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        const isMobile = window.innerWidth <= 768;
+        
+        renderer.setPixelRatio(pixelRatio);
         renderer.setSize(w, h, false);
         uniforms.uResolution.value.set(renderer.domElement.width, renderer.domElement.height);
+        
         if (threeRef.current?.composer)
           threeRef.current.composer.setSize(renderer.domElement.width, renderer.domElement.height);
-        uniforms.uPixelSize.value = pixelSize * renderer.getPixelRatio();
+        
+        // Adjust pixel size for mobile and hosting
+        const mobilePixelSize = isMobile ? pixelSize * 1.5 : pixelSize;
+        uniforms.uPixelSize.value = mobilePixelSize * pixelRatio;
       };
       setSize();
       const ro = new ResizeObserver(setSize);
@@ -463,12 +473,26 @@ const PixelBlast = ({
         const { fx, fy, w, h } = mapToPixels(e);
         touch.addTouch({ x: fx / w, y: fy / h });
       };
-      renderer.domElement.addEventListener('pointerdown', onPointerDown, {
-        passive: true
-      });
-      renderer.domElement.addEventListener('pointermove', onPointerMove, {
-        passive: true
-      });
+      // Enhanced mobile touch handling
+      const isMobile = window.innerWidth <= 768;
+      
+      if (isMobile) {
+        // Mobile-specific event listeners
+        renderer.domElement.addEventListener('touchstart', onPointerDown, {
+          passive: true
+        });
+        renderer.domElement.addEventListener('touchmove', onPointerMove, {
+          passive: true
+        });
+      } else {
+        // Desktop event listeners
+        renderer.domElement.addEventListener('pointerdown', onPointerDown, {
+          passive: true
+        });
+        renderer.domElement.addEventListener('pointermove', onPointerMove, {
+          passive: true
+        });
+      }
       let raf = 0;
       const animate = () => {
         if (autoPauseOffscreen && !visibilityRef.current.visible) {
