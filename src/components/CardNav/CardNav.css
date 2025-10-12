@@ -7,6 +7,7 @@
   max-width: 800px;
   z-index: 99;
   box-sizing: border-box;
+  padding-top: 1.5em;
 }
 
 .card-nav {
@@ -82,7 +83,7 @@
 }
 
 .card-nav-cta-button {
-  background-color: #111;
+  background-color: #000000;
   color: white;
   border: none;
   border-radius: calc(0.75rem - 0.35rem);
@@ -159,8 +160,16 @@
 
 @media (max-width: 768px) {
   .card-nav-container {
-    width: 90%;
+    width: 100%;
     top: 1.2em;
+    padding-top: 1em;
+    left: 0;
+    transform: none;
+  }
+
+  .card-nav {
+    margin: 0 1rem;
+    border-radius: 0.75rem;
   }
 
   .card-nav-top {
