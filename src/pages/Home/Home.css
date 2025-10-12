@@ -16,23 +16,21 @@
 /* Hero Section with Pixel Blast */
 .hero-section {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  margin: 0;
+  padding: 8rem 0 4rem;
   overflow: hidden;
   background: #ffffff;
 }
 
 .hero-section .pixel-blast-container {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   opacity: 0.9;
   pointer-events: auto;
   z-index: 0;
@@ -786,18 +784,11 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-section {
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
+    padding: 6rem 0 3rem;
+    min-height: auto;
   }
 
   .hero-section .pixel-blast-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
     opacity: 1;
     filter: drop-shadow(0 0 50px rgba(56, 189, 248, 0.8)) 
             saturate(2) 
@@ -869,19 +860,7 @@
 }
 
 @media (max-width: 480px) {
-  .hero-section {
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-  }
-
   .hero-section .pixel-blast-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
     opacity: 1;
     filter: drop-shadow(0 0 60px rgba(56, 189, 248, 1)) 
             saturate(2.2) 
