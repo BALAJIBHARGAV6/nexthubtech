@@ -310,8 +310,8 @@ class App {
   createRenderer() {
     this.renderer = new Renderer({
       alpha: true,
-      antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+      antialias: false, // Disable antialias for better performance
+      dpr: Math.min(window.devicePixelRatio || 1, 1.5) // Reduced pixel ratio
     });
     this.gl = this.renderer.gl;
     this.gl.clearColor(0, 0, 0, 0);
@@ -430,7 +430,16 @@ class App {
     }
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
-    this.raf = window.requestAnimationFrame(this.update.bind(this));
+    
+    // Throttle animation to 30fps for better performance
+    if (!this.lastUpdateTime) this.lastUpdateTime = 0;
+    const now = performance.now();
+    if (now - this.lastUpdateTime >= 33) { // ~30fps
+      this.lastUpdateTime = now;
+      this.raf = window.requestAnimationFrame(this.update.bind(this));
+    } else {
+      this.raf = window.requestAnimationFrame(this.update.bind(this));
+    }
   }
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);

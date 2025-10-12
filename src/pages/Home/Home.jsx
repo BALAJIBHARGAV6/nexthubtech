@@ -71,25 +71,25 @@ const Home = () => {
       <section className="hero-section" ref={heroRef}>
         <PixelBlast
           variant="circle"
-          pixelSize={8}
+          pixelSize={6}
           color="#38bdf8"
-          patternScale={2.5}
-          patternDensity={0.9}
-          pixelSizeJitter={0.4}
+          patternScale={2.0}
+          patternDensity={0.8}
+          pixelSizeJitter={0.3}
           enableRipples={true}
-          rippleSpeed={0.25}
-          rippleThickness={0.15}
-          rippleIntensityScale={1.2}
+          rippleSpeed={0.2}
+          rippleThickness={0.12}
+          rippleIntensityScale={1.0}
           liquid={true}
-          liquidStrength={0.08}
-          liquidRadius={1.8}
-          liquidWobbleSpeed={3.5}
-          speed={0.45}
-          edgeFade={0.15}
+          liquidStrength={0.06}
+          liquidRadius={1.5}
+          liquidWobbleSpeed={3.0}
+          speed={0.4}
+          edgeFade={0.12}
           transparent={false}
           antialias={false}
           showInstructions={false}
-          enhancedVisibility={true}
+          enhancedVisibility={false}
         />
         
         <div className="container hero-content">

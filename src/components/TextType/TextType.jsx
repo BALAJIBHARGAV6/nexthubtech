@@ -41,10 +41,10 @@ const TextType = ({
     return Math.random() * (max - min) + min;
   }, [variableSpeed, typingSpeed]);
 
-  const getCurrentTextColor = () => {
+  const getCurrentTextColor = useCallback(() => {
     if (textColors.length === 0) return '#ffffff';
     return textColors[currentTextIndex % textColors.length];
-  };
+  }, [textColors, currentTextIndex]);
 
   useEffect(() => {
     if (!startOnVisible || !containerRef.current) return;

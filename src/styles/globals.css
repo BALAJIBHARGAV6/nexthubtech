@@ -54,6 +54,29 @@
   scroll-behavior: smooth;
 }
 
+/* Performance optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Optimize animations and transitions */
+* {
+  will-change: auto;
+}
+
+/* Force GPU acceleration for animated elements */
+.hero-section,
+.pixel-blast-container,
+.circular-gallery,
+.text-type,
+.card-nav {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;

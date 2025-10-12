@@ -170,9 +170,9 @@ float Bayer2(vec2 a) {
 #define Bayer4(a) (Bayer2(.5*(a))*0.25 + Bayer2(a))
 #define Bayer8(a) (Bayer4(.5*(a))*0.25 + Bayer2(a))
 
-#define FBM_OCTAVES     5
-#define FBM_LACUNARITY  1.25
-#define FBM_GAIN        1.0
+#define FBM_OCTAVES     3
+#define FBM_LACUNARITY  1.5
+#define FBM_GAIN        0.8
 
 float hash11(float n){ return fract(sin(n)*43758.5453); }
 
@@ -360,12 +360,14 @@ const PixelBlast = ({
       const renderer = new THREE.WebGLRenderer({
         canvas,
         context: gl,
-        antialias,
-        alpha: true
+        antialias: false, // Disable antialias for better performance
+        alpha: true,
+        powerPreference: "high-performance", // Use dedicated GPU if available
+        failIfMajorPerformanceCaveat: false
       });
       renderer.domElement.style.width = '100%';
       renderer.domElement.style.height = '100%';
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5)); // Reduced pixel ratio
       container.appendChild(renderer.domElement);
       const uniforms = {
         uResolution: { value: new THREE.Vector2(0, 0) },
@@ -509,17 +511,27 @@ const PixelBlast = ({
         });
       }
       let raf = 0;
-      const animate = () => {
+      let lastTime = 0;
+      const targetFPS = 30; // Reduced from 60fps to 30fps for better performance
+      const frameInterval = 1000 / targetFPS;
+      
+      const animate = (currentTime) => {
         if (autoPauseOffscreen && !visibilityRef.current.visible) {
           raf = requestAnimationFrame(animate);
           return;
         }
-        uniforms.uTime.value = timeOffset + clock.getElapsedTime() * speedRef.current;
-        if (liquidEffect) liquidEffect.uniforms.get('uTime').value = uniforms.uTime.value;
-        if (composer) {
-          if (touch) touch.update();
-          composer.render();
-        } else renderer.render(scene, camera);
+        
+        // Throttle animation to target FPS
+        if (currentTime - lastTime >= frameInterval) {
+          uniforms.uTime.value = timeOffset + clock.getElapsedTime() * speedRef.current;
+          if (liquidEffect) liquidEffect.uniforms.get('uTime').value = uniforms.uTime.value;
+          if (composer) {
+            if (touch) touch.update();
+            composer.render();
+          } else renderer.render(scene, camera);
+          lastTime = currentTime;
+        }
+        
         raf = requestAnimationFrame(animate);
       };
       raf = requestAnimationFrame(animate);
