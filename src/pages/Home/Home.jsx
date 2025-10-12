@@ -23,21 +23,21 @@ const Home = () => {
       <section className="hero-section" ref={heroRef}>
         <PixelBlast
           variant="circle"
-          pixelSize={8}
+          pixelSize={12}
           color="#38bdf8"
-          patternScale={2.5}
-          patternDensity={0.9}
-          pixelSizeJitter={0.4}
+          patternScale={1.8}
+          patternDensity={2.5}
+          pixelSizeJitter={0.8}
           enableRipples={true}
-          rippleSpeed={0.25}
-          rippleThickness={0.15}
-          rippleIntensityScale={1.2}
+          rippleSpeed={0.4}
+          rippleThickness={0.25}
+          rippleIntensityScale={2.5}
           liquid={true}
-          liquidStrength={0.08}
-          liquidRadius={1.8}
-          liquidWobbleSpeed={3.5}
-          speed={0.45}
-          edgeFade={0.15}
+          liquidStrength={0.15}
+          liquidRadius={2.5}
+          liquidWobbleSpeed={5.0}
+          speed={0.6}
+          edgeFade={0.05}
           transparent={false}
           antialias={false}
           showInstructions={true}

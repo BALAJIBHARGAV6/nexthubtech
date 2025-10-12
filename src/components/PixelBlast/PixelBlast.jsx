@@ -377,13 +377,13 @@ const PixelBlast = ({
         uClickTimes: { value: new Float32Array(MAX_CLICKS) },
         uShapeType: { value: SHAPE_MAP[variant] ?? 0 },
         uPixelSize: { value: pixelSize * renderer.getPixelRatio() },
-        uScale: { value: enhancedVisibility ? patternScale * 1.2 : patternScale },
-        uDensity: { value: enhancedVisibility ? patternDensity * 1.3 : patternDensity },
-        uPixelJitter: { value: enhancedVisibility ? pixelSizeJitter * 1.5 : pixelSizeJitter },
+        uScale: { value: enhancedVisibility ? patternScale * 0.8 : patternScale },
+        uDensity: { value: enhancedVisibility ? patternDensity * 2.0 : patternDensity },
+        uPixelJitter: { value: enhancedVisibility ? pixelSizeJitter * 2.0 : pixelSizeJitter },
         uEnableRipples: { value: enableRipples ? 1 : 0 },
-        uRippleSpeed: { value: enhancedVisibility ? rippleSpeed * 1.5 : rippleSpeed },
-        uRippleThickness: { value: enhancedVisibility ? rippleThickness * 1.8 : rippleThickness },
-        uRippleIntensity: { value: enhancedVisibility ? rippleIntensityScale * 2.0 : rippleIntensityScale },
+        uRippleSpeed: { value: enhancedVisibility ? rippleSpeed * 2.0 : rippleSpeed },
+        uRippleThickness: { value: enhancedVisibility ? rippleThickness * 2.5 : rippleThickness },
+        uRippleIntensity: { value: enhancedVisibility ? rippleIntensityScale * 3.0 : rippleIntensityScale },
         uEdgeFade: { value: edgeFade }
       };
       const scene = new THREE.Scene();
@@ -417,15 +417,15 @@ const PixelBlast = ({
         if (threeRef.current?.composer)
           threeRef.current.composer.setSize(renderer.domElement.width, renderer.domElement.height);
         
-        // Enhanced pixel size adjustments for better visibility
+        // Much more aggressive pixel size adjustments for mobile visibility
         let adjustedPixelSize = pixelSize;
         if (enhancedVisibility) {
           if (isSmallMobile) {
-            adjustedPixelSize = pixelSize * 2.5; // Much larger for small mobile
+            adjustedPixelSize = pixelSize * 4.0; // Much larger for small mobile
           } else if (isMobile) {
-            adjustedPixelSize = pixelSize * 2.0; // Larger for mobile
+            adjustedPixelSize = pixelSize * 3.5; // Very large for mobile
           } else {
-            adjustedPixelSize = pixelSize * 1.3; // Slightly larger for desktop
+            adjustedPixelSize = pixelSize * 2.0; // Larger for desktop too
           }
         } else {
           adjustedPixelSize = isMobile ? pixelSize * 1.5 : pixelSize;
@@ -454,8 +454,8 @@ const PixelBlast = ({
         composer = new EffectComposer(renderer);
         const renderPass = new RenderPass(scene, camera);
         liquidEffect = createLiquidEffect(touch.texture, {
-          strength: enhancedVisibility ? liquidStrength * 1.5 : liquidStrength,
-          freq: enhancedVisibility ? liquidWobbleSpeed * 1.3 : liquidWobbleSpeed
+          strength: enhancedVisibility ? liquidStrength * 2.5 : liquidStrength,
+          freq: enhancedVisibility ? liquidWobbleSpeed * 1.8 : liquidWobbleSpeed
         });
         const effectPass = new EffectPass(camera, liquidEffect);
         effectPass.renderToScreen = true;
