@@ -28,7 +28,7 @@ const Home = () => {
     {
       label: "Programs", 
       bgColor: "#38bdf8",
-      textColor: "#fff",
+      textColor: "#000000",
       links: [
         { label: "Language Training", href: "/language-training", ariaLabel: "Language Learning Programs" },
         { label: "Hackathons", href: "/hackathons", ariaLabel: "Coding Competitions" },
@@ -38,7 +38,7 @@ const Home = () => {
     {
       label: "Company",
       bgColor: "#ec4899", 
-      textColor: "#fff",
+      textColor: "#000000",
       links: [
         { label: "About Us", href: "/about", ariaLabel: "About NextHub" },
         { label: "Projects", href: "/projects", ariaLabel: "Our Projects" },

@@ -8,14 +8,7 @@
   position: relative;
 }
 
-/* CardNav positioning adjustments */
-.card-nav-container {
-  position: fixed;
-  top: 2em;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-}
+/* CardNav positioning handled in CardNav.css */
 
 .text-white-muted {
   color: rgba(255, 255, 255, 0.8);
