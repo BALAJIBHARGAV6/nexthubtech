@@ -93,9 +93,40 @@
   justify-content: center;
 }
 
-.hero-typewriter {
+.hero-texttype {
   color: #555;
   font-weight: 500;
+  text-align: center;
+}
+
+/* Mobile responsive text breaking */
+@media (max-width: 768px) {
+  .hero-tagline {
+    min-height: 4rem;
+    line-height: 1.4;
+  }
+  
+  .hero-texttype {
+    display: block;
+    max-width: 100%;
+  }
+  
+  .hero-texttype .text-type__content {
+    display: block;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-tagline {
+    min-height: 4.5rem;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+  }
+  
+  .hero-texttype {
+    line-height: 1.3;
+  }
 }
 
 .hero-buttons {

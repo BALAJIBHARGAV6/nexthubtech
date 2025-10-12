@@ -128,6 +128,7 @@ const TextType = ({
     }
 
     return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentCharIndex,
     displayedText,
@@ -142,8 +143,7 @@ const TextType = ({
     isVisible,
     reverseMode,
     variableSpeed,
-    onSentenceComplete,
-    getRandomSpeed
+    onSentenceComplete
   ]);
 
   const shouldHideCursor =
@@ -171,6 +171,3 @@ const TextType = ({
 };
 
 export default TextType;
-
-
-

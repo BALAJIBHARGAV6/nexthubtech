@@ -7,11 +7,33 @@
   margin-left: 0.25rem;
   display: inline-block;
   opacity: 1;
+  color: #38bdf8;
+  font-weight: 300;
 }
 
 .text-type__cursor--hidden {
   display: none;
 }
 
+.text-type__content {
+  color: #555;
+  font-weight: 500;
+}
 
+/* Mobile responsive styling */
+@media (max-width: 768px) {
+  .text-type {
+    display: block;
+    text-align: center;
+  }
+  
+  .text-type__cursor {
+    font-size: 0.9em;
+  }
+}
 
+@media (max-width: 480px) {
+  .text-type__cursor {
+    font-size: 0.8em;
+  }
+}

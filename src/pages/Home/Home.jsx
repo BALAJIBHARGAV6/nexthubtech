@@ -6,7 +6,7 @@ import CircularGallery from '../../components/CircularGallery/CircularGallery';
 import PixelBlast from '../../components/PixelBlast/PixelBlast';
 import MagicBento from '../../components/MagicBento/MagicBento';
 import ScrollVelocity from '../../components/ScrollVelocity/ScrollVelocity';
-import TypeWriter from '../../components/TypeWriter/TypeWriter';
+import TextType from '../../components/TextType/TextType';
 import './Home.css';
 
 const Home = () => {
@@ -52,13 +52,18 @@ const Home = () => {
           </h1>
 
           <p className="hero-tagline">
-            <TypeWriter 
-              text="Shape Your Future with Technology & Languages"
-              speed={80}
-              delay={500}
+            <TextType 
+              text={[
+                "Shape Your Future with Technology & Languages",
+                "Transform Your Career Through Innovation"
+              ]}
+              typingSpeed={75}
+              pauseDuration={1500}
               showCursor={true}
-              cursorChar="|"
-              className="hero-typewriter"
+              cursorCharacter="|"
+              className="hero-texttype"
+              textColors={['#555', '#38bdf8']}
+              loop={true}
             />
           </p>
 
