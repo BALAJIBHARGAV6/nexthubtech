@@ -7,10 +7,45 @@ import PixelBlast from '../../components/PixelBlast/PixelBlast';
 import MagicBento from '../../components/MagicBento/MagicBento';
 import ScrollVelocity from '../../components/ScrollVelocity/ScrollVelocity';
 import TextType from '../../components/TextType/TextType';
+import CardNav from '../../components/CardNav/CardNav';
+import nexthubLogo from '../../assets/nexthub-logo.svg';
 import './Home.css';
 
 const Home = () => {
   const heroRef = useRef(null);
+
+  const navItems = [
+    {
+      label: "Services",
+      bgColor: "#000000",
+      textColor: "#fff",
+      links: [
+        { label: "IT Training", href: "/trainings", ariaLabel: "IT Training Programs" },
+        { label: "Internships", href: "/internships", ariaLabel: "Internship Opportunities" },
+        { label: "Bootcamps", href: "/bootcamps", ariaLabel: "Intensive Bootcamps" }
+      ]
+    },
+    {
+      label: "Programs", 
+      bgColor: "#38bdf8",
+      textColor: "#fff",
+      links: [
+        { label: "Language Training", href: "/language-training", ariaLabel: "Language Learning Programs" },
+        { label: "Hackathons", href: "/hackathons", ariaLabel: "Coding Competitions" },
+        { label: "Workshops", href: "/workshops", ariaLabel: "Technical Workshops" }
+      ]
+    },
+    {
+      label: "Company",
+      bgColor: "#ec4899", 
+      textColor: "#fff",
+      links: [
+        { label: "About Us", href: "/about", ariaLabel: "About NextHub" },
+        { label: "Projects", href: "/projects", ariaLabel: "Our Projects" },
+        { label: "Contact", href: "/contact", ariaLabel: "Contact Information" }
+      ]
+    }
+  ];
 
   const partnerCompanies = [
     'Microsoft', 'Google', 'AWS', 'IBM', 'Oracle', 'SAP', 
@@ -20,6 +55,18 @@ const Home = () => {
 
   return (
     <div className="home-page">
+      {/* Professional Card Navigation */}
+      <CardNav
+        logo={nexthubLogo}
+        logoAlt="NextHub Technologies Logo"
+        items={navItems}
+        baseColor="#fff"
+        menuColor="#000"
+        buttonBgColor="#38bdf8"
+        buttonTextColor="#fff"
+        ease="power3.out"
+      />
+
       {/* Hero Section with Pixel Blast Background */}
       <section className="hero-section" ref={heroRef}>
         <PixelBlast
