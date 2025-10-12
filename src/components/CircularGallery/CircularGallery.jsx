@@ -379,10 +379,17 @@ class App {
     this.onCheck();
   }
   onWheel(e) {
-    e.preventDefault();
-    const delta = e.deltaY || e.wheelDelta || e.detail;
-    this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
-    this.onCheckDebounce();
+    // Only prevent default if the mouse is over the gallery container
+    const rect = this.container.getBoundingClientRect();
+    const isOverGallery = e.clientX >= rect.left && e.clientX <= rect.right && 
+                         e.clientY >= rect.top && e.clientY <= rect.bottom;
+    
+    if (isOverGallery) {
+      e.preventDefault();
+      const delta = e.deltaY || e.wheelDelta || e.detail;
+      this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+      this.onCheckDebounce();
+    }
   }
   
   // Fallback scroll detection for hosting environments
