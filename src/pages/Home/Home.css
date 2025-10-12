@@ -3,6 +3,8 @@
   width: 100%;
   min-height: 100vh;
   background: var(--white);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .text-white-muted {
@@ -21,7 +23,8 @@
   align-items: center;
   justify-content: center;
   padding: 8rem 0 4rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   background: #ffffff;
 }
 
