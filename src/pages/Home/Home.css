@@ -25,11 +25,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10rem 0 4rem;
+  padding: 8rem 0 4rem;
   overflow-x: hidden;
   overflow-y: visible;
   background: #ffffff;
-  margin-top: 120px;
 }
 
 .hero-section .pixel-blast-container {
@@ -831,9 +830,8 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-section {
-    padding: 8rem 0 3rem;
+    padding: 6rem 0 3rem;
     min-height: auto;
-    margin-top: 100px;
   }
 
   .hero-section .pixel-blast-container {
