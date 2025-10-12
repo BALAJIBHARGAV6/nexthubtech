@@ -40,7 +40,7 @@ const Home = () => {
           edgeFade={0.15}
           transparent={false}
           antialias={false}
-          showInstructions={true}
+          showInstructions={false}
           enhancedVisibility={true}
         />
         
