@@ -10,8 +10,8 @@
   display: block;
   width: 100% !important;
   height: 100% !important;
-  opacity: 1;
-  filter: drop-shadow(0 0 60px rgba(56, 189, 248, 0.8)) saturate(2.5) brightness(1.4) contrast(1.3);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 40px rgba(56, 189, 248, 0.6)) saturate(1.8) brightness(1.2) contrast(1.1);
   mix-blend-mode: normal;
   image-rendering: crisp-edges;
   background: #ffffff;
@@ -22,7 +22,7 @@
 @media (max-width: 768px) {
   .pixel-blast-container canvas {
     opacity: 1;
-    filter: drop-shadow(0 0 80px rgba(56, 189, 248, 1)) saturate(3) brightness(1.6) contrast(1.5);
+    filter: drop-shadow(0 0 50px rgba(56, 189, 248, 0.8)) saturate(2) brightness(1.3) contrast(1.2);
   }
 }
 
@@ -30,7 +30,7 @@
 @media (max-width: 480px) {
   .pixel-blast-container canvas {
     opacity: 1;
-    filter: drop-shadow(0 0 100px rgba(56, 189, 248, 1)) saturate(3.5) brightness(1.8) contrast(1.7);
+    filter: drop-shadow(0 0 60px rgba(56, 189, 248, 1)) saturate(2.2) brightness(1.4) contrast(1.3);
   }
 }
 
