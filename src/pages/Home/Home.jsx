@@ -62,7 +62,7 @@ const Home = () => {
               showCursor={true}
               cursorCharacter="|"
               className="hero-texttype"
-              textColors={['#555', '#38bdf8']}
+              textColors={['#555', '#000000']}
               loop={true}
             />
           </p>
