@@ -40,6 +40,8 @@ const Home = () => {
           edgeFade={0.15}
           transparent={false}
           antialias={false}
+          showInstructions={true}
+          enhancedVisibility={true}
         />
         
         <div className="container hero-content">

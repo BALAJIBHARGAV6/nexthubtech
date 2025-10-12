@@ -317,7 +317,9 @@ const PixelBlast = ({
   speed = 0.6,
   transparent = true,
   edgeFade = 0.3,
-  noiseAmount = 0
+  noiseAmount = 0,
+  showInstructions = true,
+  enhancedVisibility = true
 }) => {
   const containerRef = useRef(null);
   const visibilityRef = useRef({ visible: true });
@@ -375,13 +377,13 @@ const PixelBlast = ({
         uClickTimes: { value: new Float32Array(MAX_CLICKS) },
         uShapeType: { value: SHAPE_MAP[variant] ?? 0 },
         uPixelSize: { value: pixelSize * renderer.getPixelRatio() },
-        uScale: { value: patternScale },
-        uDensity: { value: patternDensity },
-        uPixelJitter: { value: pixelSizeJitter },
+        uScale: { value: enhancedVisibility ? patternScale * 1.2 : patternScale },
+        uDensity: { value: enhancedVisibility ? patternDensity * 1.3 : patternDensity },
+        uPixelJitter: { value: enhancedVisibility ? pixelSizeJitter * 1.5 : pixelSizeJitter },
         uEnableRipples: { value: enableRipples ? 1 : 0 },
-        uRippleSpeed: { value: rippleSpeed },
-        uRippleThickness: { value: rippleThickness },
-        uRippleIntensity: { value: rippleIntensityScale },
+        uRippleSpeed: { value: enhancedVisibility ? rippleSpeed * 1.5 : rippleSpeed },
+        uRippleThickness: { value: enhancedVisibility ? rippleThickness * 1.8 : rippleThickness },
+        uRippleIntensity: { value: enhancedVisibility ? rippleIntensityScale * 2.0 : rippleIntensityScale },
         uEdgeFade: { value: edgeFade }
       };
       const scene = new THREE.Scene();
@@ -406,6 +408,7 @@ const PixelBlast = ({
         // Enhanced mobile detection and pixel ratio handling
         const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
         const isMobile = window.innerWidth <= 768;
+        const isSmallMobile = window.innerWidth <= 480;
         
         renderer.setPixelRatio(pixelRatio);
         renderer.setSize(w, h, false);
@@ -414,9 +417,21 @@ const PixelBlast = ({
         if (threeRef.current?.composer)
           threeRef.current.composer.setSize(renderer.domElement.width, renderer.domElement.height);
         
-        // Adjust pixel size for mobile and hosting
-        const mobilePixelSize = isMobile ? pixelSize * 1.5 : pixelSize;
-        uniforms.uPixelSize.value = mobilePixelSize * pixelRatio;
+        // Enhanced pixel size adjustments for better visibility
+        let adjustedPixelSize = pixelSize;
+        if (enhancedVisibility) {
+          if (isSmallMobile) {
+            adjustedPixelSize = pixelSize * 2.5; // Much larger for small mobile
+          } else if (isMobile) {
+            adjustedPixelSize = pixelSize * 2.0; // Larger for mobile
+          } else {
+            adjustedPixelSize = pixelSize * 1.3; // Slightly larger for desktop
+          }
+        } else {
+          adjustedPixelSize = isMobile ? pixelSize * 1.5 : pixelSize;
+        }
+        
+        uniforms.uPixelSize.value = adjustedPixelSize * pixelRatio;
       };
       setSize();
       const ro = new ResizeObserver(setSize);
@@ -439,8 +454,8 @@ const PixelBlast = ({
         composer = new EffectComposer(renderer);
         const renderPass = new RenderPass(scene, camera);
         liquidEffect = createLiquidEffect(touch.texture, {
-          strength: liquidStrength,
-          freq: liquidWobbleSpeed
+          strength: enhancedVisibility ? liquidStrength * 1.5 : liquidStrength,
+          freq: enhancedVisibility ? liquidWobbleSpeed * 1.3 : liquidWobbleSpeed
         });
         const effectPass = new EffectPass(camera, liquidEffect);
         effectPass.renderToScreen = true;
@@ -568,7 +583,18 @@ const PixelBlast = ({
       className={`pixel-blast-container ${className ?? ''}`}
       style={style}
       aria-label="PixelBlast interactive background"
-    />
+    >
+      {showInstructions && (
+        <div className="pixel-blast-instructions">
+          <div className="instruction-text">
+            <span className="instruction-icon">👆</span>
+            <span className="instruction-message">
+              Touch or click to create interactive pixel effects
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
