@@ -17,11 +17,9 @@ const CardNav = ({
 }) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
   const cardsRef = useRef([]);
   const tlRef = useRef(null);
-  const containerRef = useRef(null);
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -117,17 +115,6 @@ const CardNav = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpanded]);
 
-  // Scroll detection for glass morphism effect
-  useLayoutEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 50); // Apply glass effect after 50px scroll
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const toggleMenu = () => {
     const tl = tlRef.current;
     if (!tl) return;
@@ -147,10 +134,7 @@ const CardNav = ({
   };
 
   return (
-    <div 
-      ref={containerRef}
-      className={`card-nav-container ${isScrolled ? 'scrolled' : ''} ${className}`}
-    >
+    <div className={`card-nav-container ${className}`}>
       <nav ref={navRef} className={`card-nav ${isExpanded ? 'open' : ''}`} style={{ backgroundColor: baseColor }}>
         <div className="card-nav-top">
           <div
