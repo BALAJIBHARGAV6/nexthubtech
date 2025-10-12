@@ -1,0 +1,48 @@
+.typewriter {
+  display: inline-block;
+  position: relative;
+}
+
+.cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
+  color: #38bdf8;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Smooth typing animation */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+}
+
+/* Enhanced cursor for better visibility */
+.cursor {
+  font-weight: 100;
+  color: #38bdf8;
+  animation: blink 1.2s infinite;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .cursor {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .cursor {
+    font-size: 0.8em;
+  }
+}

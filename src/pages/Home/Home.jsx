@@ -6,6 +6,7 @@ import CircularGallery from '../../components/CircularGallery/CircularGallery';
 import PixelBlast from '../../components/PixelBlast/PixelBlast';
 import MagicBento from '../../components/MagicBento/MagicBento';
 import ScrollVelocity from '../../components/ScrollVelocity/ScrollVelocity';
+import TypeWriter from '../../components/TypeWriter/TypeWriter';
 import './Home.css';
 
 const Home = () => {
@@ -50,7 +51,16 @@ const Home = () => {
             <span className="hero-title-technologies">Technologies</span>
           </h1>
 
-          <p className="hero-tagline">Shape Your Future with Technology & Languages</p>
+          <p className="hero-tagline">
+            <TypeWriter 
+              text="Shape Your Future with Technology & Languages"
+              speed={80}
+              delay={500}
+              showCursor={true}
+              cursorChar="|"
+              className="hero-typewriter"
+            />
+          </p>
 
           <div className="hero-buttons">
             <Link to="/trainings" className="btn btn-primary btn-hero">
