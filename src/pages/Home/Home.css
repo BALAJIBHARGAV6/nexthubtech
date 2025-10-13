@@ -287,7 +287,7 @@
 }
 
 .card-yellow {
-  border-color: rgba(255, 255, 0, 0.2);
+  border-color: rgba(255, 252, 0, 0.2);
   color: var(--yellow-primary);
 }
 
@@ -601,12 +601,12 @@
 }
 
 .service-modern-3 { 
-  border-color: rgba(255, 255, 0, 0.3);
-  background: linear-gradient(135deg, rgba(255, 255, 0, 0.05), rgba(255, 255, 0, 0.02));
+  border-color: rgba(255, 252, 0, 0.3);
+  background: linear-gradient(135deg, rgba(255, 252, 0, 0.05), rgba(255, 252, 0, 0.02));
 }
 .service-modern-3:hover { 
   border-color: var(--yellow-primary);
-  background: linear-gradient(135deg, rgba(255, 255, 0, 0.1), rgba(255, 255, 0, 0.05));
+  background: linear-gradient(135deg, rgba(255, 252, 0, 0.1), rgba(255, 252, 0, 0.05));
 }
 
 .service-modern-4 { 
