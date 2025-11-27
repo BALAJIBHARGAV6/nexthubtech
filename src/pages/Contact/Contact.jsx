@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import GradientText from '../../components/GradientText/GradientText';
 import './Contact.css';
 
 const Contact = () => {
@@ -29,7 +28,7 @@ const Contact = () => {
       <section className="contact-hero">
         <div className="container">
           <h1 className="contact-title">
-            Get in <GradientText colors={['#38bdf8', '#ec4899', '#10b981']}>Touch</GradientText>
+            Get in <span className="gradient-text">Touch</span>
           </h1>
           <p className="contact-subtitle">Let's discuss how we can help you achieve your career goals</p>
         </div>

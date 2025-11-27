@@ -1,14 +1,21 @@
 .text-type {
   display: inline-block;
   white-space: pre-wrap;
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .text-type__cursor {
-  margin-left: 0.25rem;
+  margin-left: 0.1rem;
   display: inline-block;
   opacity: 1;
   color: #38bdf8;
-  font-weight: 300;
+  font-weight: 400;
+  animation: smoothBlink 0.8s ease-in-out infinite;
+  letter-spacing: 0.05em;
 }
 
 .text-type__cursor--hidden {
@@ -18,6 +25,17 @@
 .text-type__content {
   color: #555;
   font-weight: 500;
+  display: inline;
+  letter-spacing: 0.01em;
+}
+
+@keyframes smoothBlink {
+  0%, 49%, 100% {
+    opacity: 1;
+  }
+  50%, 99% {
+    opacity: 0.3;
+  }
 }
 
 /* Mobile responsive styling */

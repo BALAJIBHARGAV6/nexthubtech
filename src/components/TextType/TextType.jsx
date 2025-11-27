@@ -7,10 +7,10 @@ import './TextType.css';
 const TextType = ({
   text,
   as: Component = 'div',
-  typingSpeed = 50,
+  typingSpeed = 35,
   initialDelay = 0,
   pauseDuration = 2000,
-  deletingSpeed = 30,
+  deletingSpeed = 20,
   loop = true,
   className = '',
   showCursor = true,

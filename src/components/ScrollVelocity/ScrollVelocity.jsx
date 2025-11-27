@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useState } from 'react';
+import { useRef, useLayoutEffect, useState, useMemo } from 'react';
 import {
   motion,
   useScroll,
@@ -20,8 +20,12 @@ function useElementWidth(ref) {
       }
     }
     updateWidth();
+    const timer = setTimeout(updateWidth, 0);
     window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateWidth);
+    };
   }, [ref]);
 
   return width;
@@ -32,8 +36,8 @@ export const ScrollVelocity = ({
   texts = [],
   velocity = 100,
   className = '',
-  damping = 50,
-  stiffness = 400,
+  damping = 30,
+  stiffness = 300,
   numCopies = 6,
   velocityMapping = { input: [0, 1000], output: [0, 5] },
   parallaxClassName = 'parallax',
@@ -60,8 +64,8 @@ export const ScrollVelocity = ({
     const { scrollY } = useScroll(scrollOptions);
     const scrollVelocity = useVelocity(scrollY);
     const smoothVelocity = useSpring(scrollVelocity, {
-      damping: damping ?? 50,
-      stiffness: stiffness ?? 400
+      damping: damping ?? 30,
+      stiffness: stiffness ?? 300
     });
     const velocityFactor = useTransform(
       smoothVelocity,
@@ -98,18 +102,25 @@ export const ScrollVelocity = ({
       baseX.set(baseX.get() + moveBy);
     });
 
-    const spans = [];
-    for (let i = 0; i < numCopies; i++) {
-      spans.push(
-        <span className={className} key={i} ref={i === 0 ? copyRef : null}>
-          {children}
-        </span>
-      );
-    }
+    const spans = useMemo(() => {
+      const spanArray = [];
+      for (let i = 0; i < numCopies; i++) {
+        spanArray.push(
+          <span className={className} key={i} ref={i === 0 ? copyRef : null}>
+            {children}
+          </span>
+        );
+      }
+      return spanArray;
+    }, [children, className, numCopies]);
 
     return (
       <div className={parallaxClassName} style={parallaxStyle}>
-        <motion.div className={scrollerClassName} style={{ x, ...scrollerStyle }}>
+        <motion.div 
+          className={scrollerClassName} 
+          style={{ x, ...scrollerStyle }}
+          willChange="transform"
+        >
           {spans}
         </motion.div>
       </div>

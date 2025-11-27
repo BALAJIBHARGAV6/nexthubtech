@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
 
-export default function CountUp({
+const CountUp = memo(function CountUp({
   to,
   from = 0,
   direction = 'up',
@@ -15,16 +15,17 @@ export default function CountUp({
 }) {
   const ref = useRef(null);
   const motionValue = useMotionValue(direction === 'down' ? to : from);
+  const rafId = useRef(null);
 
-  const damping = 20 + 40 * (1 / duration);
-  const stiffness = 100 * (1 / duration);
+  const damping = 15 + 35 * (1 / duration);
+  const stiffness = 80 * (1 / duration);
 
   const springValue = useSpring(motionValue, {
     damping,
     stiffness
   });
 
-  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const isInView = useInView(ref, { once: true, margin: '100px' });
 
   const getDecimalPlaces = num => {
     const str = num.toString();
@@ -72,24 +73,34 @@ export default function CountUp({
 
   useEffect(() => {
     const unsubscribe = springValue.on('change', latest => {
-      if (ref.current) {
-        const hasDecimals = maxDecimals > 0;
+      if (ref.current && rafId.current === null) {
+        rafId.current = requestAnimationFrame(() => {
+          rafId.current = null;
+          const hasDecimals = maxDecimals > 0;
 
-        const options = {
-          useGrouping: !!separator,
-          minimumFractionDigits: hasDecimals ? maxDecimals : 0,
-          maximumFractionDigits: hasDecimals ? maxDecimals : 0
-        };
+          const options = {
+            useGrouping: !!separator,
+            minimumFractionDigits: hasDecimals ? maxDecimals : 0,
+            maximumFractionDigits: hasDecimals ? maxDecimals : 0
+          };
 
-        const formattedNumber = Intl.NumberFormat('en-US', options).format(latest);
+          const formattedNumber = Intl.NumberFormat('en-US', options).format(latest);
 
-        ref.current.textContent = separator ? formattedNumber.replace(/,/g, separator) : formattedNumber;
+          ref.current.textContent = separator ? formattedNumber.replace(/,/g, separator) : formattedNumber;
+        });
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
   }, [springValue, separator, maxDecimals]);
 
   return <span className={className} ref={ref} />;
-}
+});
+
+export default CountUp;
 

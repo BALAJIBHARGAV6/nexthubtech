@@ -5,6 +5,9 @@
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
+  contain: layout style paint;
+  position: relative;
+  z-index: 0;
 }
 
 .scroller {
@@ -13,10 +16,17 @@
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
+  contain: layout style paint;
+  /* Smooth rendering with hardware acceleration */
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  position: relative;
+  z-index: 0;
 }
 
 .scroller span {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   font-size: 2.8rem;
   font-weight: 700;
   font-family: var(--font-display);
@@ -29,5 +39,48 @@
   margin-right: 2rem;
   user-select: none;
   pointer-events: none;
+  contain: paint;
+  flex-shrink: 0;
+  white-space: nowrap;
+  /* Super smooth rendering */
+  font-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.02em;
+}
+
+/* Optimize for different screen sizes */
+@media (max-width: 1024px) {
+  .scroller span {
+    font-size: 2.2rem;
+    margin-right: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroller span {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .scroller span {
+    font-size: 1.4rem;
+    margin-right: 0.75rem;
+  }
+}
+
+/* Support for reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .parallax,
+  .scroller {
+    animation: none;
+    transition: none;
+  }
+  
+  .scroller span {
+    animation: none;
+    transition: none;
+  }
 }
 

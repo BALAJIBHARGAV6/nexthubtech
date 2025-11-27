@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import GradientText from '../../components/GradientText/GradientText';
 import CountUp from '../../components/CountUp/CountUp';
 import CircularGallery from '../../components/CircularGallery/CircularGallery';
 import PixelBlast from '../../components/PixelBlast/PixelBlast';
@@ -22,17 +21,17 @@ const Home = () => {
       links: [
         { label: "IT Training", href: "/trainings", ariaLabel: "IT Training Programs" },
         { label: "Internships", href: "/internships", ariaLabel: "Internship Opportunities" },
-        { label: "Bootcamps", href: "/bootcamps", ariaLabel: "Intensive Bootcamps" }
+        { label: "Language Training", href: "/language-training", ariaLabel: "Language Learning Programs" }
       ]
     },
     {
-      label: "Programs", 
+      label: "Events", 
       bgColor: "#38bdf8",
       textColor: "#000000",
       links: [
-        { label: "Language Training", href: "/language-training", ariaLabel: "Language Learning Programs" },
-        { label: "Hackathons", href: "/hackathons", ariaLabel: "Coding Competitions" },
-        { label: "Workshops", href: "/workshops", ariaLabel: "Technical Workshops" }
+        { label: "Bootcamps & Hackathons", href: "/bootcamps", ariaLabel: "Bootcamps and Hackathons" },
+        { label: "Workshops", href: "/workshops", ariaLabel: "Technical Workshops" },
+        { label: "Projects", href: "/projects", ariaLabel: "Our Projects" }
       ]
     },
     {
@@ -41,7 +40,7 @@ const Home = () => {
       textColor: "#000000",
       links: [
         { label: "About Us", href: "/about", ariaLabel: "About NextHub" },
-        { label: "Projects", href: "/projects", ariaLabel: "Our Projects" },
+        { label: "Our Team", href: "/team", ariaLabel: "Meet Our Team" },
         { label: "Contact", href: "/contact", ariaLabel: "Contact Information" }
       ]
     }
@@ -104,13 +103,15 @@ const Home = () => {
                 "Shape Your Future with Technology & Languages",
                 "Transform Your Career Through Innovation"
               ]}
-              typingSpeed={75}
-              pauseDuration={1500}
+              typingSpeed={40}
+              deletingSpeed={25}
+              pauseDuration={1800}
               showCursor={true}
               cursorCharacter="|"
               className="hero-texttype"
               textColors={['#555', '#000000']}
               loop={true}
+              cursorBlinkDuration={0.4}
             />
           </p>
 
@@ -209,7 +210,7 @@ const Home = () => {
       <section className="features-modern-section">
         <div className="container">
           <h2 className="section-title text-center">
-            Why Choose <GradientText colors={['#38bdf8', '#ec4899']}>NextHub</GradientText>
+            Why Choose <span className="gradient-text">NextHub</span>
           </h2>
           <p className="section-subtitle text-center">Everything you need to launch your tech career</p>
 

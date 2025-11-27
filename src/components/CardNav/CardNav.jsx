@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 // use your own icon import if react-icons is not available
 import { GoArrowUpRight } from 'react-icons/go';
@@ -149,9 +150,9 @@ const CardNav = ({
             <div className="hamburger-line" />
           </div>
 
-          <div className="logo-container">
+          <Link to="/" className="logo-container">
             <img src={logo} alt={logoAlt} className="logo" />
-          </div>
+          </Link>
 
           <button
             type="button"

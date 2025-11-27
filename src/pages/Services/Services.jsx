@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CountUp from '../../components/CountUp/CountUp';
-import GradientText from '../../components/GradientText/GradientText';
 import TextType from '../../components/TextType/TextType';
 import './Services.css';
 
@@ -63,12 +62,7 @@ const Services = () => {
       <section className="services-hero">
         <div className="container">
           <h1>
-            <GradientText
-              colors={["#38bdf8", "#ec4899", "#fbbf24"]}
-              animationSpeed={4}
-            >
-              Our Services
-            </GradientText>
+            <span className="gradient-text">Our Services</span>
           </h1>
           <div className="hero-subtitle">
             <TextType 
