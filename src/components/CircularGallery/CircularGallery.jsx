@@ -182,7 +182,17 @@ class Media {
           float edgeSmooth = 0.002;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
           
-          gl_FragColor = vec4(color.rgb, alpha);
+          // Add sky blue border
+          float borderWidth = 0.008;
+          float borderAlpha = smoothstep(-borderWidth, 0.0, d) * (1.0 - smoothstep(0.0, borderWidth, d));
+          
+          vec3 borderColor = vec3(0.224, 0.740, 0.973); // Sky blue (#38bdf8)
+          
+          // Mix border with image
+          vec3 finalColor = mix(borderColor, color.rgb, alpha);
+          float finalAlpha = mix(borderAlpha, alpha, alpha);
+          
+          gl_FragColor = vec4(finalColor, finalAlpha);
         }
       `,
       uniforms: {

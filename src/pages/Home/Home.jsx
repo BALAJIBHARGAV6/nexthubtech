@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import CountUp from '../../components/CountUp/CountUp';
 import CircularGallery from '../../components/CircularGallery/CircularGallery';
 import PixelBlast from '../../components/PixelBlast/PixelBlast';
 import MagicBento from '../../components/MagicBento/MagicBento';
@@ -73,22 +72,22 @@ const Home = () => {
           pixelSize={8}
           color="#38bdf8"
           patternScale={2.5}
-          patternDensity={0.9}
-          pixelSizeJitter={0.4}
+          patternDensity={0.8}
+          pixelSizeJitter={0.35}
           enableRipples={true}
           rippleSpeed={0.25}
           rippleThickness={0.15}
           rippleIntensityScale={1.2}
           liquid={true}
-          liquidStrength={0.08}
-          liquidRadius={1.8}
-          liquidWobbleSpeed={3.5}
-          speed={0.45}
+          liquidStrength={0.07}
+          liquidRadius={1.6}
+          liquidWobbleSpeed={3}
+          speed={0.4}
           edgeFade={0.15}
           transparent={false}
           antialias={false}
           showInstructions={false}
-          enhancedVisibility={true}
+          enhancedVisibility={false}
         />
         
         <div className="container hero-content">
@@ -103,15 +102,15 @@ const Home = () => {
                 "Shape Your Future with Technology & Languages",
                 "Transform Your Career Through Innovation"
               ]}
-              typingSpeed={40}
-              deletingSpeed={25}
-              pauseDuration={1800}
+              typingSpeed={50}
+              deletingSpeed={30}
+              pauseDuration={2000}
               showCursor={true}
               cursorCharacter="|"
               className="hero-texttype"
-              textColors={['#555', '#000000']}
+              textColors={['#38bdf8', '#38bdf8']}
               loop={true}
-              cursorBlinkDuration={0.4}
+              cursorBlinkDuration={0.5}
             />
           </p>
 
@@ -122,86 +121,6 @@ const Home = () => {
             <Link to="/internships" className="btn btn-pink btn-hero">
               Get Internship
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section with Unique CountUp Design */}
-      <section className="stats-showcase-section">
-        <div className="container">
-          <div className="stats-grid-modern">
-            <div className="modern-stat-card card-sky">
-              <div className="stat-modern-number">
-                <CountUp to={200000} separator="," duration={3} />+
-              </div>
-              <div className="stat-modern-label">Professionals Trained</div>
-              <div className="stat-description">Empowering careers worldwide</div>
-            </div>
-
-            <div className="modern-stat-card card-pink">
-              <div className="stat-modern-number">
-                <CountUp to={4500} separator="," duration={3} />+
-              </div>
-              <div className="stat-modern-label">Partner Organizations</div>
-              <div className="stat-description">Building strong connections</div>
-            </div>
-
-            <div className="modern-stat-card card-yellow">
-              <div className="stat-modern-number">
-                <CountUp to={100000} separator="," duration={3} />+
-              </div>
-              <div className="stat-modern-label">Internships Provided</div>
-              <div className="stat-description">Real-world experience</div>
-            </div>
-
-            <div className="modern-stat-card card-green">
-              <div className="stat-modern-number">
-                <CountUp to={30000} separator="," duration={3} />+
-              </div>
-              <div className="stat-modern-label">Successful Placements</div>
-              <div className="stat-description">Building tech careers</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-          {/* ScrollVelocity Banner - 3 Smooth Infinite Lines */}
-          <section className="scroll-velocity-section">
-            <ScrollVelocity 
-              texts={[
-                'NextHub Technologies • Empowering Tomorrow\'s Innovations • Leading IT Training Since 2017 • 200,000+ Professionals Trained',
-                'Transform Your Career Today • Build Amazing Projects • Learn Cutting-Edge Skills • Join 4,500+ Partner Companies',
-                'Guaranteed Internships • Expert Mentorship • Global Opportunities • 30,000+ Successful Placements'
-              ]}
-              velocity={50}
-              className="velocity-text"
-              numCopies={20}
-              damping={60}
-              stiffness={400}
-              velocityMapping={{ input: [0, 1000], output: [0, 3] }}
-            />
-          </section>
-
-      {/* Magic Bento Section - Interactive Showcase */}
-      <section className="magic-bento-section">
-        <div className="container">
-          <h2 className="section-title text-center text-white">
-            Interactive <span className="text-sky">Showcase</span>
-          </h2>
-          <p className="section-subtitle text-center text-white-muted">Explore our innovative features</p>
-          <div className="bento-wrapper">
-            <MagicBento
-              textAutoHide={true}
-              enableStars={true}
-              enableSpotlight={true}
-              enableBorderGlow={true}
-              enableTilt={true}
-              enableMagnetism={true}
-              clickEffect={true}
-              spotlightRadius={300}
-              particleCount={12}
-              glowColor="56, 189, 248"
-            />
           </div>
         </div>
       </section>
@@ -242,6 +161,50 @@ const Home = () => {
               <p>Personalized mentorship and dedicated job placement assistance</p>
               <div className="feature-highlight"></div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section with Unique CountUp Design */}
+      {/* Counter removed to improve performance - smooth scrolling prioritized */}
+
+          {/* ScrollVelocity Banner - 3 Smooth Infinite Lines */}
+          <section className="scroll-velocity-section">
+            <ScrollVelocity 
+              texts={[
+                'NextHub Technologies • Empowering Tomorrow\'s Innovations • Leading IT Training Since 2017 • 200,000+ Professionals Trained',
+                'Transform Your Career Today • Build Amazing Projects • Learn Cutting-Edge Skills • Join 4,500+ Partner Companies',
+                'Guaranteed Internships • Expert Mentorship • Global Opportunities • 30,000+ Successful Placements'
+              ]}
+              velocity={50}
+              className="velocity-text"
+              numCopies={20}
+              damping={60}
+              stiffness={400}
+              velocityMapping={{ input: [0, 1000], output: [0, 3] }}
+            />
+          </section>
+
+      {/* Magic Bento Section - Interactive Showcase */}
+      <section className="magic-bento-section">
+        <div className="container">
+          <h2 className="section-title text-center text-white">
+            Interactive <span className="text-sky">Showcase</span>
+          </h2>
+          <p className="section-subtitle text-center text-white-muted">Explore our innovative features</p>
+          <div className="bento-wrapper">
+            <MagicBento
+              textAutoHide={true}
+              enableStars={true}
+              enableSpotlight={true}
+              enableBorderGlow={true}
+              enableTilt={true}
+              enableMagnetism={true}
+              clickEffect={true}
+              spotlightRadius={300}
+              particleCount={12}
+              glowColor="56, 189, 248"
+            />
           </div>
         </div>
       </section>
