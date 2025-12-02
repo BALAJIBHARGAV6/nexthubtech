@@ -179,20 +179,11 @@ class Media {
           
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
           
+          // Smooth antialiasing for edges
           float edgeSmooth = 0.002;
           float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
           
-          // Add sky blue border
-          float borderWidth = 0.008;
-          float borderAlpha = smoothstep(-borderWidth, 0.0, d) * (1.0 - smoothstep(0.0, borderWidth, d));
-          
-          vec3 borderColor = vec3(0.224, 0.740, 0.973); // Sky blue (#38bdf8)
-          
-          // Mix border with image
-          vec3 finalColor = mix(borderColor, color.rgb, alpha);
-          float finalAlpha = mix(borderAlpha, alpha, alpha);
-          
-          gl_FragColor = vec4(finalColor, finalAlpha);
+          gl_FragColor = vec4(color.rgb, alpha);
         }
       `,
       uniforms: {
@@ -320,8 +311,8 @@ class App {
   createRenderer() {
     this.renderer = new Renderer({
       alpha: true,
-      antialias: false, // Disable antialias for better performance
-      dpr: Math.min(window.devicePixelRatio || 1, 1.5) // Reduced pixel ratio
+      antialias: true,
+      dpr: Math.min(window.devicePixelRatio || 1, 2)
     });
     this.gl = this.renderer.gl;
     this.gl.clearColor(0, 0, 0, 0);
@@ -343,14 +334,18 @@ class App {
   }
   createMedias(items, bend = 1, textColor, borderRadius, font) {
     const defaultItems = [
-      { image: `https://picsum.photos/seed/1/800/600`, text: 'Innovation' },
-      { image: `https://picsum.photos/seed/2/800/600`, text: 'Technology' },
-      { image: `https://picsum.photos/seed/3/800/600`, text: 'Learning' },
-      { image: `https://picsum.photos/seed/4/800/600`, text: 'Growth' },
-      { image: `https://picsum.photos/seed/5/800/600`, text: 'Excellence' },
-      { image: `https://picsum.photos/seed/16/800/600`, text: 'Future' },
-      { image: `https://picsum.photos/seed/17/800/600`, text: 'Success' },
-      { image: `https://picsum.photos/seed/8/800/600`, text: 'Achievement' }
+      { image: `https://picsum.photos/seed/1/800/600`, text: 'Bridge' },
+      { image: `https://picsum.photos/seed/2/800/600`, text: 'Desk Setup' },
+      { image: `https://picsum.photos/seed/3/800/600`, text: 'Waterfall' },
+      { image: `https://picsum.photos/seed/4/800/600`, text: 'Strawberries' },
+      { image: `https://picsum.photos/seed/5/800/600`, text: 'Deep Diving' },
+      { image: `https://picsum.photos/seed/16/800/600`, text: 'Train Track' },
+      { image: `https://picsum.photos/seed/17/800/600`, text: 'Santorini' },
+      { image: `https://picsum.photos/seed/8/800/600`, text: 'Blurry Lights' },
+      { image: `https://picsum.photos/seed/9/800/600`, text: 'New York' },
+      { image: `https://picsum.photos/seed/10/800/600`, text: 'Good Boy' },
+      { image: `https://picsum.photos/seed/21/800/600`, text: 'Coastline' },
+      { image: `https://picsum.photos/seed/12/800/600`, text: 'Palm Trees' }
     ];
     const galleryItems = items && items.length ? items : defaultItems;
     this.mediasImages = galleryItems.concat(galleryItems);
@@ -389,23 +384,8 @@ class App {
     this.onCheck();
   }
   onWheel(e) {
-    // Only prevent default if the mouse is over the gallery container
-    const rect = this.container.getBoundingClientRect();
-    const isOverGallery = e.clientX >= rect.left && e.clientX <= rect.right && 
-                         e.clientY >= rect.top && e.clientY <= rect.bottom;
-    
-    if (isOverGallery) {
-      e.preventDefault();
-      const delta = e.deltaY || e.wheelDelta || e.detail;
-      this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
-      this.onCheckDebounce();
-    }
-  }
-  
-  // Fallback scroll detection for hosting environments
-  onScroll(e) {
-    const delta = e.deltaY || e.wheelDelta || e.detail || 1;
-    this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.1;
+    const delta = e.deltaY || e.wheelDelta || e.detail;
+    this.scroll.target += (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
     this.onCheckDebounce();
   }
   onCheck() {
@@ -440,64 +420,35 @@ class App {
     }
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
-    
-    // Throttle animation to 30fps for better performance
-    if (!this.lastUpdateTime) this.lastUpdateTime = 0;
-    const now = performance.now();
-    if (now - this.lastUpdateTime >= 33) { // ~30fps
-      this.lastUpdateTime = now;
-      this.raf = window.requestAnimationFrame(this.update.bind(this));
-    } else {
-      this.raf = window.requestAnimationFrame(this.update.bind(this));
-    }
+    this.raf = window.requestAnimationFrame(this.update.bind(this));
   }
   addEventListeners() {
     this.boundOnResize = this.onResize.bind(this);
     this.boundOnWheel = this.onWheel.bind(this);
-    this.boundOnScroll = this.onScroll.bind(this);
     this.boundOnTouchDown = this.onTouchDown.bind(this);
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
-    
-    // Enhanced scroll detection for hosting compatibility
     window.addEventListener('resize', this.boundOnResize);
-    
-    // Multiple wheel event listeners for better compatibility
-    window.addEventListener('wheel', this.boundOnWheel, { passive: false });
-    window.addEventListener('mousewheel', this.boundOnWheel, { passive: false });
-    window.addEventListener('DOMMouseScroll', this.boundOnWheel, { passive: false });
-    
-    // Mouse events
+    window.addEventListener('mousewheel', this.boundOnWheel);
+    window.addEventListener('wheel', this.boundOnWheel);
     window.addEventListener('mousedown', this.boundOnTouchDown);
     window.addEventListener('mousemove', this.boundOnTouchMove);
     window.addEventListener('mouseup', this.boundOnTouchUp);
-    
-    // Touch events for mobile
-    window.addEventListener('touchstart', this.boundOnTouchDown, { passive: false });
-    window.addEventListener('touchmove', this.boundOnTouchMove, { passive: false });
-    window.addEventListener('touchend', this.boundOnTouchUp, { passive: false });
-    
-    // Additional scroll detection for hosting environments
-    document.addEventListener('scroll', this.boundOnScroll, { passive: false });
-    window.addEventListener('scroll', this.boundOnScroll, { passive: false });
+    window.addEventListener('touchstart', this.boundOnTouchDown);
+    window.addEventListener('touchmove', this.boundOnTouchMove);
+    window.addEventListener('touchend', this.boundOnTouchUp);
   }
   destroy() {
     window.cancelAnimationFrame(this.raf);
-    
-    // Clean up all event listeners
     window.removeEventListener('resize', this.boundOnResize);
-    window.removeEventListener('wheel', this.boundOnWheel);
     window.removeEventListener('mousewheel', this.boundOnWheel);
-    window.removeEventListener('DOMMouseScroll', this.boundOnWheel);
+    window.removeEventListener('wheel', this.boundOnWheel);
     window.removeEventListener('mousedown', this.boundOnTouchDown);
     window.removeEventListener('mousemove', this.boundOnTouchMove);
     window.removeEventListener('mouseup', this.boundOnTouchUp);
     window.removeEventListener('touchstart', this.boundOnTouchDown);
     window.removeEventListener('touchmove', this.boundOnTouchMove);
     window.removeEventListener('touchend', this.boundOnTouchUp);
-    document.removeEventListener('scroll', this.boundOnScroll);
-    window.removeEventListener('scroll', this.boundOnScroll);
-    
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas);
     }

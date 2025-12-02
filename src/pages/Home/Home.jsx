@@ -6,6 +6,7 @@ import MagicBento from '../../components/MagicBento/MagicBento';
 import ScrollVelocity from '../../components/ScrollVelocity/ScrollVelocity';
 import TextType from '../../components/TextType/TextType';
 import CardNav from '../../components/CardNav/CardNav';
+import LogoLoop from '../../components/LogoLoop/LogoLoop';
 import nexthubLogo from '../../assets/nexthub-logo.svg';
 import './Home.css';
 
@@ -45,10 +46,18 @@ const Home = () => {
     }
   ];
 
-  const partnerCompanies = [
-    'Microsoft', 'Google', 'AWS', 'IBM', 'Oracle', 'SAP', 
-    'TCS', 'Infosys', 'Wipro', 'Cognizant', 'Accenture', 
-    'Capgemini', 'Tech Mahindra', 'HCL', 'Dell'
+  const companyLogos = [
+    { src: "https://logo.clearbit.com/microsoft.com", alt: "Microsoft", href: "https://www.microsoft.com" },
+    { src: "https://logo.clearbit.com/google.com", alt: "Google", href: "https://www.google.com" },
+    { src: "https://logo.clearbit.com/aws.amazon.com", alt: "AWS", href: "https://aws.amazon.com" },
+    { src: "https://logo.clearbit.com/oracle.com", alt: "Oracle", href: "https://www.oracle.com" },
+    { src: "https://logo.clearbit.com/sap.com", alt: "SAP", href: "https://www.sap.com" },
+    { src: "https://logo.clearbit.com/tcs.com", alt: "TCS", href: "https://www.tcs.com" },
+    { src: "https://logo.clearbit.com/infosys.com", alt: "Infosys", href: "https://www.infosys.com" },
+    { src: "https://logo.clearbit.com/wipro.com", alt: "Wipro", href: "https://www.wipro.com" },
+    { src: "https://logo.clearbit.com/cognizant.com", alt: "Cognizant", href: "https://www.cognizant.com" },
+    { src: "https://logo.clearbit.com/accenture.com", alt: "Accenture", href: "https://www.accenture.com" },
+    { src: "https://logo.clearbit.com/capgemini.com", alt: "Capgemini", href: "https://www.capgemini.com" },
   ];
 
   return (
@@ -96,23 +105,28 @@ const Home = () => {
             <span className="hero-title-technologies">Technologies</span>
           </h1>
 
-          <p className="hero-tagline">
-            <TextType 
-              text={[
-                "Shape Your Future with Technology & Languages",
-                "Transform Your Career Through Innovation"
-              ]}
-              typingSpeed={50}
-              deletingSpeed={30}
-              pauseDuration={2000}
-              showCursor={true}
-              cursorCharacter="|"
-              className="hero-texttype"
-              textColors={['#38bdf8', '#38bdf8']}
-              loop={true}
-              cursorBlinkDuration={0.5}
-            />
-          </p>
+          <div className="hero-tagline">
+            <span className="hero-tagline-desktop">
+              <TextType 
+                text={[
+                  "Shape Your Future with Technology & Languages",
+                  "Transform Your Career Through Innovation"
+                ]}
+                typingSpeed={100}
+                deletingSpeed={60}
+                pauseDuration={3000}
+                showCursor={true}
+                cursorCharacter="|"
+                className="hero-texttype"
+                textColors={['#000000', '#000000']}
+                loop={true}
+                cursorBlinkDuration={0.5}
+              />
+            </span>
+            <span className="hero-tagline-mobile">
+              Shape Your Future with<br />Technology & Languages
+            </span>
+          </div>
 
           <div className="hero-buttons">
             <Link to="/trainings" className="btn btn-primary btn-hero">
@@ -217,14 +231,8 @@ const Home = () => {
           </h2>
           <p className="section-subtitle text-center">Real transformations, Real people</p>
         </div>
-        <div style={{ height: '450px', position: 'relative' }}>
-          <CircularGallery
-            bend={2}
-            textColor="#38bdf8"
-            borderRadius={0.05}
-            scrollSpeed={1.5}
-            scrollEase={0.08}
-          />
+        <div className="gallery-container-responsive" style={{ height: '600px', position: 'relative' }}>
+          <CircularGallery bend={3} textColor="#38bdf8" borderRadius={0.05} scrollEase={0.02}/>
         </div>
       </section>
 
@@ -277,20 +285,24 @@ const Home = () => {
       </section>
 
       {/* Trusted Partners Section */}
-      <section className="partners-section">
+      <section className="partners-section" style={{ backgroundColor: '#ffffff', padding: '6rem 0' }}>
         <div className="container">
           <h2 className="section-title text-center">
             Trusted by <span className="text-sky">Industry Leaders</span>
           </h2>
-          <div className="partners-scroll">
-            <div className="partners-track">
-              {partnerCompanies.map((company, index) => (
-                <div key={index} className="partner-item">{company}</div>
-              ))}
-              {partnerCompanies.map((company, index) => (
-                <div key={`copy-${index}`} className="partner-item">{company}</div>
-              ))}
-            </div>
+          <div style={{ height: '150px', position: 'relative', overflow: 'hidden', marginTop: '4rem' }}>
+            <LogoLoop
+              logos={companyLogos}
+              speed={20}
+              direction="left"
+              logoHeight={60}
+              gap={80}
+              pauseOnHover={false}
+              scaleOnHover={false}
+              fadeOut
+              fadeOutColor="#ffffff"
+              ariaLabel="Technology partners"
+            />
           </div>
         </div>
       </section>

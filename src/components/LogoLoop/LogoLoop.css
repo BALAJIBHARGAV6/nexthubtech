@@ -1,92 +1,54 @@
 .logoloop {
   position: relative;
-  overflow-x: hidden;
-
-  --logoloop-gap: 32px;
-  --logoloop-logoHeight: 28px;
-  --logoloop-fadeColorAuto: #ffffff;
-}
-
-.logoloop--scale-hover {
-  padding-top: calc(var(--logoloop-logoHeight) * 0.1);
-  padding-bottom: calc(var(--logoloop-logoHeight) * 0.1);
-}
-
-@media (prefers-color-scheme: dark) {
-  .logoloop {
-    --logoloop-fadeColorAuto: #0b0b0b;
-  }
+  overflow: hidden;
+  width: 100%;
+  padding: 2rem 0;
 }
 
 .logoloop__track {
   display: flex;
-  width: max-content;
+  gap: var(--logoloop-gap, 80px);
   will-change: transform;
-  user-select: none;
-}
-
-.logoloop__list {
-  display: flex;
-  align-items: center;
 }
 
 .logoloop__item {
-  flex: 0 0 auto;
-  margin-right: var(--logoloop-gap);
-  font-size: var(--logoloop-logoHeight);
-  line-height: 1;
-}
-
-.logoloop__item:last-child {
-  margin-right: var(--logoloop-gap);
-}
-
-.logoloop__node {
-  display: inline-flex;
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  padding: 1.5rem 2.5rem;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.logoloop__item:hover {
+  transform: translateY(-4px) translateZ(0);
+  box-shadow: 0 12px 32px rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.5);
 }
 
 .logoloop__item img {
-  height: var(--logoloop-logoHeight);
+  height: var(--logoloop-logoHeight, 60px);
   width: auto;
   display: block;
   object-fit: contain;
+  transition: transform 0.3s ease;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
   image-rendering: -webkit-optimize-contrast;
-  -webkit-user-drag: none;
-  pointer-events: none;
-  /* Links handle interaction */
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  image-rendering: crisp-edges;
 }
 
-.logoloop--scale-hover .logoloop__item {
-  overflow: visible;
-}
-
-.logoloop--scale-hover .logoloop__item:hover img,
-.logoloop--scale-hover .logoloop__item:hover .logoloop__node {
-  transform: scale(1.2);
-  transform-origin: center center;
-}
-
-.logoloop--scale-hover .logoloop__node {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logoloop__link {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: opacity 0.2s ease;
-}
-
-.logoloop__link:hover {
-  opacity: 0.8;
-}
-
-.logoloop__link:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+.logoloop__item:hover img {
+  transform: scale(1.05) translateZ(0);
 }
 
 .logoloop--fade::before,
@@ -95,39 +57,17 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: clamp(24px, 8%, 120px);
+  width: 150px;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .logoloop--fade::before {
   left: 0;
-  background: linear-gradient(
-    to right,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to right, var(--logoloop-fadeColor, #ffffff) 0%, transparent 100%);
 }
 
 .logoloop--fade::after {
   right: 0;
-  background: linear-gradient(
-    to left,
-    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(to left, var(--logoloop-fadeColor, #ffffff) 0%, transparent 100%);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .logoloop__track {
-    transform: translate3d(0, 0, 0) !important;
-  }
-
-  .logoloop__item img,
-  .logoloop__node {
-    transition: none !important;
-  }
-}
-
-
-

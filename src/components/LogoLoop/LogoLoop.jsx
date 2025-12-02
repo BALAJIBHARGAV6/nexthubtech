@@ -3,128 +3,70 @@ import './LogoLoop.css';
 
 const LogoLoop = ({
   logos = [],
-  speed = 120,
+  speed = 60,
   direction = 'left',
-  logoHeight = 48,
-  gap = 40,
-  pauseOnHover = true,
-  scaleOnHover = false,
-  fadeOut = true,
-  fadeOutColor = '#ffffff',
-  ariaLabel = 'Logo carousel'
+  logoHeight = 28,
+  gap = 32,
+  fadeOut = false,
+  fadeOutColor,
+  ariaLabel = 'Partner logos'
 }) => {
-  const containerRef = useRef(null);
   const trackRef = useRef(null);
+  const animationRef = useRef(null);
 
   useEffect(() => {
-    const container = containerRef.current;
     const track = trackRef.current;
-    if (!container || !track) return;
+    if (!track || logos.length === 0) return;
 
-    const clone = track.cloneNode(true);
-    track.parentElement.appendChild(clone);
+    let position = 0;
+    const pixelsPerSecond = speed;
 
-    const trackWidth = track.offsetWidth;
-    const duration = (trackWidth / speed) * 1000;
-    const directionFactor = direction === 'left' ? -1 : 1;
-
-    let animationId;
-    let startTime = null;
-    let pausedAt = null;
-    let isPaused = false;
-
-    const animate = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      if (isPaused) return;
-
-      const elapsed = timestamp - startTime + (pausedAt || 0);
-      const progress = (elapsed % duration) / duration;
-      const offset = progress * trackWidth * directionFactor;
-
-      track.style.transform = `translateX(${offset}px)`;
-      clone.style.transform = `translateX(${offset + trackWidth * directionFactor}px)`;
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    const pause = () => {
-      if (!isPaused) {
-        isPaused = true;
-        const currentTime = performance.now();
-        pausedAt = (currentTime - startTime) % duration;
-        cancelAnimationFrame(animationId);
+    const animate = () => {
+      position -= pixelsPerSecond / 60;
+      
+      // Get the width of one set of logos
+      const itemWidth = track.scrollWidth / 2;
+      
+      // Reset position seamlessly when first set scrolls out
+      if (Math.abs(position) >= itemWidth) {
+        position = 0;
       }
+      
+      track.style.transform = `translate3d(${position}px, 0, 0)`;
+      animationRef.current = requestAnimationFrame(animate);
     };
 
-    const play = () => {
-      if (isPaused) {
-        isPaused = false;
-        startTime = performance.now() - (pausedAt || 0);
-        animationId = requestAnimationFrame(animate);
-      }
-    };
-
-    if (pauseOnHover) {
-      container.addEventListener('mouseenter', pause);
-      container.addEventListener('mouseleave', play);
-    }
-
-    animationId = requestAnimationFrame(animate);
+    animationRef.current = requestAnimationFrame(animate);
 
     return () => {
-      cancelAnimationFrame(animationId);
-      if (pauseOnHover) {
-        container.removeEventListener('mouseenter', pause);
-        container.removeEventListener('mouseleave', play);
-      }
-      if (clone.parentElement) {
-        clone.parentElement.removeChild(clone);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [logos, speed, direction, pauseOnHover]);
+  }, [logos, speed]);
 
   return (
     <div
-      ref={containerRef}
-      className={`logoloop ${scaleOnHover ? 'logoloop--scale-hover' : ''} ${fadeOut ? 'logoloop--fade' : ''}`}
+      className={`logoloop ${fadeOut ? 'logoloop--fade' : ''}`}
       style={{
         '--logoloop-gap': `${gap}px`,
         '--logoloop-logoHeight': `${logoHeight}px`,
-        '--logoloop-fadeColor': fadeOutColor
+        ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
       }}
       role="region"
       aria-label={ariaLabel}
     >
-      <div className="logoloop__track">
-        <ul ref={trackRef} className="logoloop__list">
-          {logos.map((logo, index) => (
-            <li key={index} className="logoloop__item">
-              {logo.href ? (
-                <a
-                  href={logo.href}
-                  className="logoloop__link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={logo.alt || logo.title}
-                >
-                  {logo.src ? (
-                    <img src={logo.src} alt={logo.alt} loading="lazy" />
-                  ) : (
-                    <span className="logoloop__node">{logo.node}</span>
-                  )}
-                </a>
-              ) : (
-                <>
-                  {logo.src ? (
-                    <img src={logo.src} alt={logo.alt} loading="lazy" />
-                  ) : (
-                    <span className="logoloop__node">{logo.node}</span>
-                  )}
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
+      <div className="logoloop__track" ref={trackRef}>
+        {logos.map((logo, index) => (
+          <div key={`original-${index}`} className="logoloop__item">
+            {logo.src && <img src={logo.src} alt={logo.alt || `Logo ${index + 1}`} />}
+          </div>
+        ))}
+        {logos.map((logo, index) => (
+          <div key={`duplicate-${index}`} className="logoloop__item">
+            {logo.src && <img src={logo.src} alt={logo.alt || `Logo ${index + 1}`} />}
+          </div>
+        ))}
       </div>
     </div>
   );
